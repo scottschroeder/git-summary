@@ -183,7 +183,7 @@ summarize_one_git_repo () {
     local quiet=$4
 
     local app_name=$f
-    local branch_name=`gitC $f symbolic-ref HEAD | sed -e "s/^refs\/heads\///"`
+    local branch_name=`gitC $f symbolic-ref HEAD 2>/dev/null | sed -e "s/^refs\/heads\///"`
     local numState=0
 
     ### Check remote state
@@ -257,7 +257,7 @@ summarize_one_git_repo () {
 
 # Given the path to a git repo, compute its current branch name.
 repo_branch () {
-    gitC "$1" symbolic-ref HEAD | sed -e "s/^refs\/heads\///"
+    gitC "$1" symbolic-ref HEAD 2>/dev/null | sed -e "s/^refs\/heads\///"
 }
 
 
@@ -304,4 +304,3 @@ max_len () {
 trap "printf '$NC'" EXIT
 
 git_summary $@
-
